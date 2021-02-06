@@ -8,6 +8,8 @@ import styles from './Calculator.module.scss';
 export const Calculator: FunctionComponent = () => {
   const [topRow, setTopRow] = useState<string>('');
   const [bottomRow, setBottomRow] = useState<string>('0');
+  const [isResultActive, setIsResultActive] = useState<boolean>(false);
+  const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const displayRef = useRef<HTMLInputElement>(null);
 
   const focusInputField = () => {
@@ -42,22 +44,35 @@ export const Calculator: FunctionComponent = () => {
     }
 
     const unprocessedExpression = bottomRow + String(character);
-    const newExpression = validateAndNormalizeExpression(unprocessedExpression, bottomRow);
+    const newExpression = validateAndNormalizeExpression({
+      newExpression: unprocessedExpression,
+      currentExpression: bottomRow,
+      character,
+      isResultActive,
+    });
 
+    setIsResultActive(false);
     resetTopRow();
     setBottomRow(newExpression);
   }
 
   const tryToCalculateResult = async () => {
+    if (isRequestPending) {
+      return;
+    }
     let result = '';
+    setIsRequestPending(true);
 
     try {
       result = await calculateResult(bottomRow)
     } catch (e) {
       showError();
       return;
+    } finally {
+      setIsRequestPending(false);
     }
 
+    setIsResultActive(true);
     showResultAndMoveExpressionToTopRow(result);
   }
 
@@ -72,14 +87,23 @@ export const Calculator: FunctionComponent = () => {
 
   const onExpressionChange = (event: ChangeEvent) => {
     const target: HTMLInputElement = event.target as HTMLInputElement;
-    const newExpression = validateAndNormalizeExpression(target.value, bottomRow);
+    const character = (event.nativeEvent as InputEvent).data;
+    const newExpression = validateAndNormalizeExpression({
+      newExpression: target.value,
+      currentExpression: bottomRow,
+      character,
+      isResultActive,
+    });
 
+    setIsResultActive(false);
     resetTopRow();
     setBottomRow(newExpression);
   }
 
   const clearExpression = () => {
     let newBottomRow = bottomRow.slice(0, -1);
+
+    setIsResultActive(false);
 
     if (isInputAtMinLength(newBottomRow)) {
       resetBottomRow();

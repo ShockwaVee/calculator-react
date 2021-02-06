@@ -1,4 +1,5 @@
 import {isInputRowAtZero} from "./DisplayHelper";
+import {ExpressionValidationData} from "../interfaces/expressionValidationData";
 
 export async  function calculateResult(expression: string): Promise<string> {
   const urlEncodedExpression = encodeURIComponent(expression);
@@ -20,8 +21,13 @@ export async  function calculateResult(expression: string): Promise<string> {
   })
 }
 
-export function validateAndNormalizeExpression(newExpression: string, currentExpression: string) {
-  let normalizedExpression = newExpression.replace(/[^\d+\-*/\(\)\.]/ig, '');
+export function validateAndNormalizeExpression({newExpression, currentExpression, character, isResultActive}: ExpressionValidationData) {
+  let normalizedCharacter = character != null ? removeLetterAndOtherCharacters(String(character)) : null;
+  let normalizedExpression = removeLetterAndOtherCharacters(newExpression);
+
+  if (normalizedCharacter && isResultActive && isCharacterDigitOrParentheses(normalizedCharacter)) {
+    return normalizedCharacter;
+  }
 
   if (normalizedExpression === '0') {
     return currentExpression;
@@ -35,4 +41,12 @@ export function validateAndNormalizeExpression(newExpression: string, currentExp
   }
 
   return normalizedExpression;
+}
+
+function isCharacterDigitOrParentheses(character: string) {
+  return /[\d\(\)]/.test(character);
+}
+
+function removeLetterAndOtherCharacters(value: string) {
+  return value.replace(/[^\d+\-*/\(\)\.]/ig, '')
 }
