@@ -2,94 +2,109 @@ import React, {FunctionComponent} from "react";
 import {KeypadProps} from "./interfaces/KeypadProps";
 import {Button} from "../button/Button";
 
-export const Keypad: FunctionComponent<KeypadProps> = ({onButtonPress}) => {
+export const Keypad: FunctionComponent<KeypadProps> = ({onKeypadButtonPress, clearExpression, clearEntryExpression}) => {
 
   return (
     <div>
-    <Button onButtonPress={() => {
-      onButtonPress(1)
+    <Button onKeypadButtonPress={() => {
+      onKeypadButtonPress(1)
     }}>
       1
     </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(2)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(2)
       }}>
         2
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(3)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(3)
       }}>
         3
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(4)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(4)
       }}>
         4
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(5)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(5)
       }}>
         5
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(6)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(6)
       }}>
         6
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(7)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(7)
       }}>
         7
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(8)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(8)
       }}>
         8
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(9)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(9)
       }}>
         9
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(0)
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(0)
       }}>
         0
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('/')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('/')
       }}>
         /
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('*')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('*')
       }}>
         *
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('+')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('+')
       }}>
         +
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('-')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('-')
       }}>
         -
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('(')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('(')
       }}>
         (
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress(')')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress(')')
       }}>
         )
       </Button>
-      <Button onButtonPress={() => {
-        onButtonPress('=')
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('.')
+      }}>
+        .
+      </Button>
+      <Button onKeypadButtonPress={() => {
+        onKeypadButtonPress('=')
       }}>
         =
+      </Button>
+      <Button onKeypadButtonPress={() => {
+        clearExpression()
+      }}>
+        C
+      </Button>
+      <Button onKeypadButtonPress={() => {
+        clearEntryExpression()
+      }}>
+        CE
       </Button>
     </div>
   );

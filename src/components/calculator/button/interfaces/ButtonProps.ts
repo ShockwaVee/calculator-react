@@ -1,3 +1,3 @@
 export interface ButtonProps {
-  onButtonPress: () => void;
+  onKeypadButtonPress: () => void;
 }
