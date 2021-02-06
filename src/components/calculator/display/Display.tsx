@@ -1,5 +1,6 @@
 import React, {KeyboardEvent} from "react";
 import {DisplayProps} from "./interfaces/DisplayProps";
+import styles from './Display.module.scss';
 
 export const Display = React.forwardRef<HTMLInputElement, DisplayProps>(({
                                                                            topRow,
@@ -14,9 +15,9 @@ export const Display = React.forwardRef<HTMLInputElement, DisplayProps>(({
   }
 
   return (
-    <div>
-      <p>{topRow}</p>
-      <input ref={ref} autoFocus onKeyDown={handleKeyDown} onChange={onExpressionChange} value={bottomRow}/>
+    <div className={styles.wrapper}>
+      <p className={styles.topRow}>{topRow}</p>
+      <input className={styles.input} ref={ref} autoFocus onKeyDown={handleKeyDown} onChange={onExpressionChange} value={bottomRow}/>
     </div>
   );
 })

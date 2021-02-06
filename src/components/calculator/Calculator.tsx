@@ -3,6 +3,7 @@ import {Display} from "./display/Display";
 import {Keypad} from "./keypad/Keypad";
 import {isInputAtMinLength, isPressedCharacterEquals} from "../../helpers/DisplayHelper";
 import {calculateResult, validateAndNormalizeExpression} from "../../helpers/CalculatorHelper";
+import styles from './Calculator.module.scss';
 
 export const Calculator: FunctionComponent = () => {
   const [topRow, setTopRow] = useState<string>('');
@@ -14,7 +15,13 @@ export const Calculator: FunctionComponent = () => {
       return;
     }
 
+    if (document.activeElement === displayRef.current) {
+      return;
+    }
+
     displayRef.current.focus();
+    displayRef.current.selectionStart = displayRef.current.value.length;
+    displayRef.current.selectionEnd = displayRef.current.value.length;
   }
 
   useEffect(() => {
@@ -100,10 +107,9 @@ export const Calculator: FunctionComponent = () => {
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <Display ref={displayRef} topRow={topRow} bottomRow={bottomRow} onExpressionChange={onExpressionChange}
                onCalculateResult={tryToCalculateResult}/>
-      <br/>
       <Keypad onKeypadButtonPress={onKeypadButtonPress} clearExpression={clearExpression}
               clearEntryExpression={clearEntryExpression}/>
     </div>

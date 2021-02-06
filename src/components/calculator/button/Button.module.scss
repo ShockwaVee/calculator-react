@@ -1,0 +1,37 @@
+@import "src/styles/variables/colors";
+
+.button {
+  height: 60px;
+  border: 1px solid $border-black;
+  background-color: $button-dark;
+  color: $white;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $button-darker;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.green {
+  background-color: $button-green;
+
+  &:hover,
+  &:focus {
+    background-color: $button-green-darker;
+  }
+
+}
+
+.red {
+  background-color: $button-red;
+
+  &:hover,
+  &:focus {
+    background-color: $button-red-darker;
+  }
+}
