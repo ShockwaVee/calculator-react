@@ -103,7 +103,7 @@ export const Calculator: FunctionComponent = () => {
     setTopRow('');
   }
   const resetBottomRow = () => {
-    setTopRow('0');
+    setBottomRow('0');
   }
 
   return (
