@@ -1,6 +1,12 @@
-# Getting Started with Create React App
+## Deployment URL
+The project was deployed to a server using Netlify. To view it, please visit this [link](https://jolly-hopper-a70d1a.netlify.app/)!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Further improvements
+Some possible improvements for this app would include (depending on the nature of the improvements):
+- adding some more user-friendly feedback if an error happens
+- abstracting some functions (if necessary)
+- adding a more scalable HTTP request handler (like axios)
+- adding a UI library (like Ant Design)
 
 ## Available Scripts
 

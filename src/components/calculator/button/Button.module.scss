@@ -5,6 +5,7 @@
   border: 1px solid $border-black;
   background-color: $button-dark;
   color: $white;
+  font-size: 22px;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 
@@ -20,8 +21,7 @@
 .green {
   background-color: $button-green;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $button-green-darker;
   }
 
@@ -30,8 +30,7 @@
 .red {
   background-color: $button-red;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: $button-red-darker;
   }
 }

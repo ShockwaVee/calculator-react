@@ -29,13 +29,14 @@ export function validateAndNormalizeExpression({newExpression, currentExpression
     return normalizedCharacter;
   }
 
-  if (normalizedExpression === '0') {
+  if (normalizedExpression === '0' || normalizedExpression.length >= 16) {
     return currentExpression;
   }
 
-  if (isInputRowAtZero(currentExpression) && newExpression[1] !== '.') {
+  if (isInputRowAtZero(currentExpression) && character !== '.') {
     normalizedExpression = newExpression.slice(1);
   }
+
   if (normalizedExpression.length <= 0) {
     normalizedExpression = '0';
   }
