@@ -16,8 +16,8 @@ export const Display = React.forwardRef<HTMLInputElement, DisplayProps>(({
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.topRow}>{topRow}</p>
-      <input className={styles.input} ref={ref} autoFocus onKeyDown={handleKeyDown} onChange={onExpressionChange} value={bottomRow}/>
+      <p data-test="topRow" className={styles.topRow}>{topRow}</p>
+      <input data-test="bottomRow" className={styles.input} ref={ref} autoFocus onKeyDown={handleKeyDown} onChange={onExpressionChange} value={bottomRow}/>
     </div>
   );
 })

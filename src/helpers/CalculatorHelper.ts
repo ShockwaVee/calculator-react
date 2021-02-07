@@ -29,7 +29,7 @@ export function validateAndNormalizeExpression({newExpression, currentExpression
     return normalizedCharacter;
   }
 
-  if (normalizedExpression === '0' || normalizedExpression.length >= 16) {
+  if (isInputRowAtZero(normalizedExpression) || normalizedExpression.length >= 16) {
     return currentExpression;
   }
 
