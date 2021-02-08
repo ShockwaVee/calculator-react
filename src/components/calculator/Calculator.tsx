@@ -6,8 +6,8 @@ import {calculateResult, validateAndNormalizeExpression} from "../../helpers/Cal
 import styles from './Calculator.module.scss';
 
 export const Calculator: FunctionComponent = () => {
-  const [topRow, setTopRow] = useState<string>('');
-  const [bottomRow, setBottomRow] = useState<string>('0');
+  const [historyRow, setHistoryRow] = useState<string>('');
+  const [inputRow, setInputRow] = useState<string>('0');
   const [isResultActive, setIsResultActive] = useState<boolean>(false);
   const [isRequestPending, setIsRequestPending] = useState<boolean>(false);
   const displayRef = useRef<HTMLInputElement>(null);
@@ -43,17 +43,17 @@ export const Calculator: FunctionComponent = () => {
       return;
     }
 
-    const unprocessedExpression = bottomRow + String(character);
+    const unprocessedExpression = inputRow + String(character);
     const newExpression = validateAndNormalizeExpression({
       newExpression: unprocessedExpression,
-      currentExpression: bottomRow,
+      currentExpression: inputRow,
       character,
       isResultActive,
     });
 
     setIsResultActive(false);
-    resetTopRow();
-    setBottomRow(newExpression);
+    resetHistoryRow();
+    setInputRow(newExpression);
   }
 
   const tryToCalculateResult = async () => {
@@ -64,7 +64,7 @@ export const Calculator: FunctionComponent = () => {
     setIsRequestPending(true);
 
     try {
-      result = await calculateResult(bottomRow)
+      result = await calculateResult(inputRow)
     } catch (e) {
       showError();
       return;
@@ -73,16 +73,16 @@ export const Calculator: FunctionComponent = () => {
     }
 
     setIsResultActive(true);
-    showResultAndMoveExpressionToTopRow(result);
+    showResultAndMoveExpressionToHistoryRow(result);
   }
 
-  const showResultAndMoveExpressionToTopRow = (result: string) => {
-    moveExpressionToTopRow();
-    setBottomRow(result);
+  const showResultAndMoveExpressionToHistoryRow = (result: string) => {
+    moveExpressionToHistoryRow();
+    setInputRow(result);
   }
 
   const showError = () => {
-    setTopRow('ERROR');
+    setHistoryRow('ERROR');
   }
 
   const onExpressionChange = (event: ChangeEvent) => {
@@ -90,49 +90,49 @@ export const Calculator: FunctionComponent = () => {
     const character = (event.nativeEvent as InputEvent).data;
     const newExpression = validateAndNormalizeExpression({
       newExpression: target.value,
-      currentExpression: bottomRow,
+      currentExpression: inputRow,
       character,
       isResultActive,
     });
 
     setIsResultActive(false);
-    resetTopRow();
-    setBottomRow(newExpression);
+    resetHistoryRow();
+    setInputRow(newExpression);
   }
 
   const clearExpression = () => {
-    let newBottomRow = bottomRow.slice(0, -1);
+    let newInputRow = inputRow.slice(0, -1);
 
     setIsResultActive(false);
 
-    if (isInputAtMinLength(newBottomRow)) {
-      resetBottomRow();
+    if (isInputAtMinLength(newInputRow)) {
+      resetInputRow();
       return;
     }
 
-    resetTopRow();
-    setBottomRow(newBottomRow);
+    resetHistoryRow();
+    setInputRow(newInputRow);
   }
 
   const clearEntryExpression = () => {
-    resetTopRow();
-    resetBottomRow();
+    resetHistoryRow();
+    resetInputRow();
   }
 
-  const moveExpressionToTopRow = () => {
-    setTopRow(bottomRow);
+  const moveExpressionToHistoryRow = () => {
+    setHistoryRow(inputRow);
   }
 
-  const resetTopRow = () => {
-    setTopRow('');
+  const resetHistoryRow = () => {
+    setHistoryRow('');
   }
-  const resetBottomRow = () => {
-    setBottomRow('0');
+  const resetInputRow = () => {
+    setInputRow('0');
   }
 
   return (
     <div className={styles.wrapper}>
-      <Display ref={displayRef} topRow={topRow} bottomRow={bottomRow} onExpressionChange={onExpressionChange}
+      <Display ref={displayRef} historyRow={historyRow} inputRow={inputRow} onExpressionChange={onExpressionChange}
                onCalculateResult={tryToCalculateResult}/>
       <Keypad onKeypadButtonPress={onKeypadButtonPress} clearExpression={clearExpression}
               clearEntryExpression={clearEntryExpression}/>
