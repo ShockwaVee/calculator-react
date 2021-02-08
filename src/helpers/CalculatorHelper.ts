@@ -1,4 +1,4 @@
-import {isInputRowAtZero} from "./DisplayHelper";
+import {isInputAtMaxLength, isInputRowAtZero} from "./DisplayHelper";
 import {ExpressionValidationData} from "../interfaces/expressionValidationData";
 
 export async  function calculateResult(expression: string): Promise<string> {
@@ -29,7 +29,7 @@ export function validateAndNormalizeExpression({newExpression, currentExpression
     return normalizedCharacter;
   }
 
-  if (isInputRowAtZero(normalizedExpression) || normalizedExpression.length >= 16) {
+  if (isInputRowAtZero(normalizedExpression) || isInputAtMaxLength(normalizedExpression)) {
     return currentExpression;
   }
 

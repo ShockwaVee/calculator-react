@@ -1,7 +1,11 @@
 import React, {ChangeEvent, FunctionComponent, useEffect, useRef, useState} from "react";
 import {Display} from "./display/Display";
 import {Keypad} from "./keypad/Keypad";
-import {isInputAtMinLength, isPressedCharacterEquals} from "../../helpers/DisplayHelper";
+import {
+  isInputAtMinLength,
+  isPressedCharacterEquals,
+  maxNumberOfCharacters
+} from "../../helpers/DisplayHelper";
 import {calculateResult, validateAndNormalizeExpression} from "../../helpers/CalculatorHelper";
 import styles from './Calculator.module.scss';
 
@@ -54,6 +58,10 @@ export const Calculator: FunctionComponent = () => {
     setIsResultActive(false);
     resetHistoryRow();
     setInputRow(newExpression);
+
+    if (newExpression.length >= maxNumberOfCharacters) {
+      showTooManyCharacters();
+    }
   }
 
   const tryToCalculateResult = async () => {
@@ -85,6 +93,10 @@ export const Calculator: FunctionComponent = () => {
     setHistoryRow('ERROR');
   }
 
+  const showTooManyCharacters = () => {
+    setHistoryRow('TOO MANY CHARACTERS');
+  }
+
   const onExpressionChange = (event: ChangeEvent) => {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     const character = (event.nativeEvent as InputEvent).data;
@@ -98,6 +110,10 @@ export const Calculator: FunctionComponent = () => {
     setIsResultActive(false);
     resetHistoryRow();
     setInputRow(newExpression);
+
+    if (newExpression.length >= maxNumberOfCharacters) {
+      showTooManyCharacters();
+    }
   }
 
   const clearExpression = () => {
